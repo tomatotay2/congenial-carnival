@@ -1,43 +1,39 @@
-import java.lang.*;
+public class PigLatinTranslator {
+  // Method to translate a single word into Pig Latin
+  public static String translateWord(String word) {
+      if (word.length() == 0) return word;
 
-public class PigLatinTranslator
-{
-  public static Book translate(Book input)
-  {
-    Book translatedBook = new Book();
+      // Find the first vowel in the word
+      int firstVowelIndex = -1;
+      for (int i = 0; i < word.length(); i++) {
+          char c = word.charAt(i);
+          if (isVowel(c)) {
+              firstVowelIndex = i;
+              break;
+          }
+      }
 
-    // Add code here to populate translatedBook with a translation of the input book.
-    // Curent do-nothing code will return an empty book.
-
-    return translatedBook;
+      if (firstVowelIndex == -1) return word + "ay"; // No vowel, just append "ay"
+      String prefix = word.substring(0, firstVowelIndex);
+      String suffix = word.substring(firstVowelIndex);
+      return suffix + prefix + "ay";
   }
 
-  public static String translate(String input)
-  {
-    // System.out.println("Translate String: '" + input + "'");
-
-    // Replace this code to translate a string input.
-    // The input to this function could be any English string. 
-    // A sentence, paragraph, or a single word. 
-    // It should call translateWord at least once.
-    String result = translateWord(input);
-
-    return result;
+  // Method to check if a character is a vowel
+  private static boolean isVowel(char c) {
+      char lowerC = Character.toLowerCase(c);
+      return lowerC == 'a' || lowerC == 'e' || lowerC == 'i' || lowerC == 'o' || lowerC == 'u';
   }
 
-  private static String translateWord(String input)
-  {
-    // System.out.println("translateWord: '" + input + "'");
+  // Method to translate an entire line into Pig Latin
+  public static String translateLine(String line) {
+      String[] words = line.split("\\s+");
+      StringBuilder translatedLine = new StringBuilder();
 
-    // Replace this code to correctly translate a single word.
-    // Start here first!
-    String result = input;
-    
-    return result;
+      for (String word : words) {
+          translatedLine.append(translateWord(word)).append(" ");
+      }
+
+      return translatedLine.toString().trim();
   }
-
-  // Add additonal private methods here.
-  // For example, I had one like this:
-  // private static String capitalizeFirstLetter(String input)
-
 }
